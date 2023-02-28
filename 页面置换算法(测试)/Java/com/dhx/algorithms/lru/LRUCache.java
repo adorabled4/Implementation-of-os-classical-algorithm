@@ -4,25 +4,50 @@ import java.util.HashMap;
 
 /**
  * @author dhx_
- * @className TestLRU
+ * @className LRUCache
  * @date : 2023/02/17/ 19:26
  **/
 public class LRUCache {
 
-    // key -> Node(key, val)
+    /**
+     * key -> Node(key, val)
+     */
     private HashMap<Integer, Node> map;
 
-    // Node(k1, v1) <-> Node(k2, v2)...
+    /**
+     * Node(k1, v1) <-> Node(k2, v2)...
+     */
     private DoubleList cache;
-    // 最大容量
+
+
+    /**
+     * max capacity
+     */
     private int cap;
 
+    /**
+     * default capacity
+     */
+    public static final int DEFAULT_CAPACITY=10;
+
+    /**
+     *
+     * @param capacity LRU容量
+     */
     public LRUCache(int capacity) {
-        this.cap = capacity;
+        if(capacity<0){
+            this.cap=DEFAULT_CAPACITY;
+        }else{
+            this.cap = capacity;
+        }
         map = new HashMap<>();
         cache = new DoubleList();
     }
-    /* 将某个 key 提升为最近使用的 */
+
+    /**
+     * 将某个 key 提升为最近使用的
+     * @param key
+     */
     private void makeRecently(int key) {
         Node x = map.get(key);
         // 先从链表中删除这个节点
@@ -31,7 +56,11 @@ public class LRUCache {
         cache.addLast(x);
     }
 
-    /* 添加最近使用的元素 */
+    /**
+     * 添加最近使用的元素
+     * @param key
+     * @param val
+     */
     private void addRecently(int key, int val) {
         Node x = new Node(key, val);
         // 链表尾部就是最近使用的元素
@@ -40,7 +69,10 @@ public class LRUCache {
         map.put(key, x);
     }
 
-    /* 删除某一个 key */
+    /**
+     * 删除某一个 key
+     * @param key
+     */
     private void deleteKey(int key) {
         Node x = map.get(key);
         // 从链表中删除
@@ -49,7 +81,9 @@ public class LRUCache {
         map.remove(key);
     }
 
-    /* 删除最久未使用的元素 */
+    /**
+     *  删除最久未使用的元素
+     */
     private void removeLeastRecently() {
         // 链表头部的第一个元素就是最久未使用的
         Node deletedNode = cache.removeFirst();
@@ -58,6 +92,11 @@ public class LRUCache {
         map.remove(deletedKey);
     }
 
+    /**
+     * 获取key对应的value
+     * @param key
+     * @return
+     */
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
@@ -67,6 +106,11 @@ public class LRUCache {
         return map.get(key).val;
     }
 
+    /**
+     * 向LRU中添加数据
+     * @param key
+     * @param val
+     */
     public void put(int key,int val){
         if (map.containsKey(key)) {
             // 删除旧的数据

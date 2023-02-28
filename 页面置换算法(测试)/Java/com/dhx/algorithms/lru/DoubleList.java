@@ -6,9 +6,14 @@ package com.dhx.algorithms.lru;
  * @date : 2023/02/17/ 19:28
  **/
 public class DoubleList {
-    // 头尾虚节点
+    /**
+     * 头尾虚节点
+     */
     private Node head, tail;
-    // 链表元素数
+
+    /**
+     * 链表元素数
+     */
     private int size;
 
     public DoubleList() {
@@ -20,7 +25,10 @@ public class DoubleList {
         size = 0;
     }
 
-    // 在链表尾部添加节点 x，时间 O(1)
+    /**
+     * 在链表尾部添加节点 x，时间 O(1)
+     * @param x 需要添加的node
+     */
     public void addLast(Node  x) {
         x.pre = tail.pre;
         x.next = tail;
@@ -29,15 +37,20 @@ public class DoubleList {
         size++;
     }
 
-    // 删除链表中的 x 节点（x 一定存在）
-    // 由于是双链表且给的是目标 Node 节点，时间 O(1)
+    /**
+     * 删除链表中的 x 节点（x 一定存在） , 由于是双链表且给的是目标 Node 节点，时间 O(1)
+     * @param x
+     */
     public void remove(Node  x) {
         x.pre.next = x.next;
         x.next.pre = x.pre;
         size--;
     }
 
-    // 删除链表中第一个节点，并返回该节点，时间 O(1)
+    /**
+     * 删除链表中第一个节点，并返回该节点，时间 O(1)
+     * @return
+     */
     public Node removeFirst() {
         if (head.next == tail)
             return null;
@@ -46,7 +59,10 @@ public class DoubleList {
         return first;
     }
 
-    // 返回链表长度，时间 O(1)
+    /**
+     * 返回链表长度，时间 O(1)
+     * @return
+     */
     public int size() { return size; }
 
 }
