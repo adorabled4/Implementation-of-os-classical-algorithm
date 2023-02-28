@@ -1,6 +1,6 @@
 package com.dhx.sample;
 
-import com.dhx.algorithms.LRU;
+import com.dhx.algorithms.lru.LRUCache;
 
 /**
  * @author dhx_
@@ -10,11 +10,12 @@ import com.dhx.algorithms.LRU;
 public class LRUSample {
 
     public static void main(String[] args) {
-        LRU cache = new LRU(3);
+        LRUCache cache = new LRUCache(3); // 设置lru序列的容量为3
+        // 添加三个前置数据 ,  保证此时lru序列已满
         cache.put(1, 1);
         cache.put(2, 2);
         cache.put(3, 3);
-        cache.get(1);
+        System.out.println("the first Node :"+cache.get(1));
         cache.put(4, 3);
         System.out.println(cache);
     }
