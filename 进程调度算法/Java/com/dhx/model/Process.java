@@ -49,6 +49,19 @@ public class Process {
      */
     long aveCycleTime;
 
+    /**
+     * HRRN 算法的优先权
+     */
+    double preemption;
+
+    public double getPreemption() {
+        return preemption;
+    }
+
+    public void setPreemption(double preemption) {
+        this.preemption = preemption;
+    }
+
     public Process(int PID , int runTime){
         this.PID=PID;
         this.runTime=runTime; // 设置进程需要的执行时间
