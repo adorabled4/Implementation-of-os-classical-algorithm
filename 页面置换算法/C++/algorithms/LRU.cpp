@@ -1,27 +1,22 @@
 //
 // Created by 侯金科 on 2023/5/6.
 //
-#include <iostream>
+
 #include <map>
-using namespace std;
+#include <ostream>
 
-class CacheNode{
-public:
-    int key;
-    int value;
-    CacheNode *pre, *next;//节点的前驱、后继指针
+#include "../model/CacheNode.h"
 
-    CacheNode(int key, int value) : key(key), value(value) {}
-};
 
-class LRUCache{
+
+class LRU{
     int capacity;//页容量
     CacheNode *head, *tail;//头尾指针
-    map<int, CacheNode *> mp;
+    std::map<int, CacheNode *> mp;
     int times;//次数
     int MissingNum;//缺页次数
 public:
-    LRUCache(int capacity){
+    explicit LRU(int capacity){
         this->capacity = capacity;
         head = nullptr;
         tail = nullptr;
@@ -39,6 +34,7 @@ public:
             return node -> value;
         }else{
             MissingNum++;
+            set(key, 1);
             return -1;
         }
     }
@@ -84,18 +80,31 @@ public:
         }
     }
 
+    int getTimes() const {
+        return times;
+    }
+
+    int getMissingNum() const {
+        return MissingNum;
+    }
 };
 
 
 
+/*
 int main(){
-    LRUCache *lruCache = new LRUCache(2);
-    lruCache -> set(2, 1);
-    lruCache -> set(1, 1);
+
+    //解决控制条乱码问题
+    system("chcp 65001");
+    LRU *lruCache = new LRU(2);
+    lruCache -> get(2);
+    lruCache -> get(1);
     cout << lruCache -> get(2) << endl;
-    lruCache -> set(4, 1);
+    lruCache -> get(4);
     cout << lruCache -> get(1) << endl;
     cout << lruCache -> get(2) << endl;
+    cout << "缺页次数：" << lruCache->getMissingNum()<<endl;
+    cout << "缺页率为：" << 1.0* lruCache->getMissingNum()/lruCache->getTimes()<<endl;
     cout << "hhh" << endl;
     return 0;
-}
+}*/
