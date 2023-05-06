@@ -1,9 +1,9 @@
-package com.dhx.algorithms.lru;
+package com.dhx.model;
 
 /**
  * @author dhx_
  * @className Node
- * @date : 2023/02/17/ 19:28
+ * @date : 2023-5-5 17:40:16
  **/
 public class Element {
 

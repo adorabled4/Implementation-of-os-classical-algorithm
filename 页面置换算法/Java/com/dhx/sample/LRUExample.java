@@ -1,7 +1,9 @@
 package com.dhx.sample;
 
-import com.dhx.algorithms.lru.Element;
+import com.dhx.model.Element;
 import com.dhx.algorithms.lru.LRU;
+
+import static com.dhx.model.Constant.elements;
 
 /**
  * @author dhx_
@@ -12,7 +14,7 @@ public class LRUExample {
 
     public static void main(String[] args) {
         System.out.println("测试前准备测试页如下: ");
-        for (Element element : LRU.elements) {
+        for (Element element : elements) {
             System.out.println(element);
         }
         // 理论上LRU算法的缺页率会随着 物理块数量的增加而降低 , 如果不明显, 可以通过加大第二个参数(访问次数)尝试
@@ -45,7 +47,7 @@ public class LRUExample {
         LRU cache = new LRU(n);
         // 假设我们最开始直接放入3个页面到内存块中，
         for (int i = 0; i < n; i++) {
-            cache.put(LRU.elements[i]);
+            cache.put(elements[i]);
         }
         for (int i = 1; i <= times; i++) {
             cache.get((int)(Math.random()*100)%10+1);

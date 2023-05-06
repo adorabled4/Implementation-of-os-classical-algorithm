@@ -1,11 +1,16 @@
 package com.dhx.algorithms.lru;
 
+import com.dhx.model.DoubleLinkedList;
+import com.dhx.model.Element;
+
 import java.util.HashMap;
+
+import static com.dhx.model.Constant.elements;
 
 /**
  * @author dhx_
  * @className LRUCache
- * @date : 2023/02/17/ 19:26
+ * @date : 2023-5-5 17:40:16
  **/
 public class LRU {
 
@@ -18,11 +23,6 @@ public class LRU {
      * Element(k1, v1) <-> Element(k2, v2)...
      */
     private DoubleLinkedList cache;
-
-    /**
-     * 初始化所有的页面数
-     */
-    public static final Element[]elements;
 
     /**
      * max capacity
@@ -39,12 +39,6 @@ public class LRU {
      */
     public static final int DEFAULT_CAPACITY=10;
     
-    static {
-        elements=new Element[11];
-        for (int i = 0; i <= 10; i++) {
-            elements[i]=new Element(i+1,10000+i+1);
-        }
-    }
 
     /**
      *
