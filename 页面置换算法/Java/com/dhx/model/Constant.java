@@ -14,8 +14,9 @@ public class Constant {
 
     static {
         elements=new Element[11];
+        // 由于映射的关系是使用element的key , 因此在数组赋值的时候需要提前设置一个0 element进行占位操作
         for (int i = 0; i <= 10; i++) {
-            elements[i]=new Element(i+1,10000+i+1);
+            elements[i]=new Element(i,10000+i);
         }
     }
 }
