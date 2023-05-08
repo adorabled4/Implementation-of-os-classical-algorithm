@@ -18,7 +18,6 @@ void testNBlock(int n,int times){
 
     // 设置lru序列的容量为n
     LFU *cache = new LFU(n);
-    // 假设我们最开始直接放入3个页面到内存块中，
 
     for (int i = 1; i <= times; i++) {
         cache->get((int)(dist(eng)));
