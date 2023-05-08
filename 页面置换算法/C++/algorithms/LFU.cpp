@@ -1,11 +1,9 @@
 //
 // Created by 侯金科 on 2023/5/6.
 //
-//
-// Created by 侯金科 on 2023/5/6.
-//
-#include <iostream>
+
 #include <map>
+
 #include "../model/CacheNode.h"
 
 class LFU{
