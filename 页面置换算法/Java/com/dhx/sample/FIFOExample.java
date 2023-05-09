@@ -11,10 +11,10 @@ import static com.dhx.model.Constant.elements;
 
 /**
  * @author dhx_
- * @className LruSample
- * @date : 2023/02/17/ 12:41
+ * @className LFUSample
+ * @date : 2023-5-5 15:13:42
  **/
-public class FIFOxample {
+public class FIFOExample {
 
     public static void main(String[] args) {
         System.out.println("测试前准备测试页如下: ");
