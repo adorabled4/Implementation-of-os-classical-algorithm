@@ -6,16 +6,14 @@
 
 #include "../model/CacheNode.h"
 
-
-
-class LRU{
+class LFU{
     int capacity;//页容量
     CacheNode *head, *tail;//头尾指针
     std::map<int, CacheNode *> mp;
     int times;//次数
     int MissingNum;//缺页次数
 public:
-    explicit LRU(int capacity){
+    explicit LFU(int capacity){
         this->capacity = capacity;
         head = nullptr;
         tail = nullptr;
@@ -23,13 +21,13 @@ public:
         MissingNum = 0;
     }
 
+    //调出key页面，若没有则创建
     int get(int key){
         auto it = mp.find(key);//map<int, CacheNode *>::iterator it = mp.find(key);
         times ++;
         if(it != mp.end()){
             CacheNode *node = it -> second;
-            remove(node);
-            setHead(node);
+            node->value++;//调整节点的访问次数
             return node -> value;
         }else{
             MissingNum++;
@@ -38,17 +36,32 @@ public:
         }
     }
 
+    //调入key页面
     void set(int key, int value){
         auto *newNode = new CacheNode(key, value);
         if(mp.size() >= capacity){
-            auto iter = mp.find(tail -> key);
-            remove(tail);
-            mp.erase(iter);
-        }
-        setHead(newNode);
+            setHead(newNode);
+            remove1(newNode);
+        }else
+            setHead(newNode);
         mp[key] = newNode;
 
     }
+
+    //从尾部遍历,避免先调入的调出
+    void remove1(CacheNode *node){
+        CacheNode * min = tail, *p = tail;
+
+        while(p->pre != node){
+            p = p -> pre;
+            if(min->value > p->value)
+                min = p;
+        }
+
+        remove(min);
+        mp.erase(mp.find(min->key));
+    }
+
 
     void remove(CacheNode *node){
         if(node -> pre != nullptr)
@@ -80,23 +93,10 @@ public:
     }
 };
 
-
 //可以在这里直接调试，输出-1表示缺页,用cout和endl记得加std
-
 /*
 int main(){
 
-    //解决控制条乱码问题
-    system("chcp 65001");
-    LRU *lruCache = new LRU(2);
-    lruCache -> get(2);
-    lruCache -> get(1);
-    cout << lruCache -> get(2) << endl;
-    lruCache -> get(4);
-    cout << lruCache -> get(1) << endl;
-    cout << lruCache -> get(2) << endl;
-    cout << "缺页次数：" << lruCache->getMissingNum()<<endl;
-    cout << "缺页率为：" << 1.0* lruCache->getMissingNum()/lruCache->getTimes()<<endl;
-    cout << "hhh" << endl;
     return 0;
-}*/
+}
+*/
