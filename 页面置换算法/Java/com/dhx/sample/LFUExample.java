@@ -1,8 +1,8 @@
 package com.dhx.sample;
 
+import com.dhx.algorithms.fifo.FIFO;
 import com.dhx.algorithms.lfu.LFU;
 import com.dhx.model.Element;
-import com.dhx.algorithms.lru.LRU;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import static com.dhx.model.Constant.elements;
 
 /**
  * @author dhx_
- * @className LruSample
- * @date : 2023/02/17/ 12:41
+ * @className LFUSample
+ * @date : 2023-5-9 10:48:43
  **/
-public class LRUExample {
+public class LFUExample {
 
     public static void main(String[] args) {
         System.out.println("测试前准备测试页如下: ");
@@ -30,13 +30,14 @@ public class LRUExample {
         results.add(testNBlock(10, 1000));
         results.forEach(System.out::println);
         /*
-        实际测试结果
-        [测试结束]物理块数: 3 缺页次数: 720 缺页率: 0.72
-        [测试结束]物理块数: 4 缺页次数: 627 缺页率: 0.627
-        [测试结束]物理块数: 6 缺页次数: 393 缺页率: 0.393
-        [测试结束]物理块数: 8 缺页次数: 219 缺页率: 0.219
+        实际测试情况
+        测试时建议测试加大测试数据的容量，使得结果更加趋于一般效果
+        [测试结束]物理块数: 3 缺页次数: 706 缺页率: 0.706
+        [测试结束]物理块数: 4 缺页次数: 578 缺页率: 0.578
+        [测试结束]物理块数: 6 缺页次数: 402 缺页率: 0.402
+        [测试结束]物理块数: 8 缺页次数: 198 缺页率: 0.198
         [测试结束]物理块数: 10 缺页次数: 0 缺页率: 0.0
-        */
+         */
     }
 
     /**
@@ -50,7 +51,7 @@ public class LRUExample {
             throw new RuntimeException("测试块数过多!");
         }
         // 设置lru序列的容量为n
-        LRU cache = new LRU(n);
+        LFU cache = new LFU(n);
         // 假设我们最开始直接放入3个页面到内存块中，
         for (int i = 1; i <= n; i++) {
             cache.put(elements[i]);
