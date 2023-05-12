@@ -78,3 +78,17 @@ os经典算法实现
 ```
 
 ![示意图](http://oss.dhx.icu/dhx/image-20230329122912749.png)
+
+### 运行C++代码
+
+如果您需要运行C++代码，请将工作目录切换为C++文件夹，以确保代码可以正确被编译器识别
+
+如果使用的是CLion，请保持版本在`2023.1`以上或最新，低版本可能无法支持单文件编译
+
+若无法使用最新版CLion，则在`2020.3`之后同样可以通过安装 C/C++ Single File Execution插件
+然后在需要运行的代码中右键，点击Add executable for single c/cpp file。
+这样，CLion会在CMakeLists.txt文件中添加相应的代码，并在右上角显示运行按钮。
+建议使用最新版，较为方便无需配置CMake，只需要点击`main()`左侧的绿色运行按钮即可运行
+![img.png](img.png)
+
+如果使用的是VS code，可以通过安装相关插件来运行，或者通过terminal使用`gcc/g++`运行相关文件
