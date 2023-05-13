@@ -52,6 +52,9 @@ public:
                 cout << "从" << head << "号磁道移动到" << request[i] << "号磁道，移动距离为" << distance << endl;
                 head = request[i]; // 更新磁头位置
         }
+        cout << "C_SCAN算法调度结束" << endl;
+        cout << "总移动距离为：" << seekTime << endl;
+        cout << "平均寻道长度为：" << (double)seekTime / n << endl;
     }
 };
 
