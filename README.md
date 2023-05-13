@@ -89,6 +89,6 @@ os经典算法实现
 然后在需要运行的代码中右键，点击Add executable for single c/cpp file。
 这样，CLion会在CMakeLists.txt文件中添加相应的代码，并在右上角显示运行按钮。
 建议使用最新版，较为方便无需配置CMake，只需要点击`main()`左侧的绿色运行按钮即可运行
-![img.png](img.png)
+![](http://oss.dhx.icu/dhx/img.png)
 
 如果使用的是VS code，可以通过安装相关插件来运行，或者通过terminal使用`gcc/g++`运行相关文件
