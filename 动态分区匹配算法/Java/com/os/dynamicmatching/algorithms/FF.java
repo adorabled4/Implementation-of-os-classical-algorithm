@@ -6,17 +6,18 @@ import com.os.dynamicmatching.model.Process;
 import com.os.dynamicmatching.util.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.os.dynamicmatching.util.ThreadUtil.threadPool;
+import static com.os.dynamicmatching.util.RandomTestUtil.threadPool;
 
 /**
  * @author adorabled4
  * @className FF
  * @date : 2023/05/13/ 15:37
  **/
-public class FF extends Thread{
+public class FF extends Thread implements Runnable{
 
     /**
      * 帧
@@ -62,7 +63,7 @@ public class FF extends Thread{
      * 分配内存
      * @param process
      */
-    public synchronized boolean allocate(Process process){
+    public synchronized long allocate(Process process){
         // 从内存的起始点开始遍历，找到第一个空闲的分区
         for (int i = 0; i < mem.size(); i++) {
             if(mem.get(i).getStatus()==DMConstant.FREE){
@@ -71,7 +72,7 @@ public class FF extends Thread{
                     process.setStatus(Process.BLOCK);
                     blockingQueue.add(process);
                     System.out.println(TimeUtil.getCurrentTime()+"\u001B[32m\u001B[1m[FAILED]\u001B[0m添加进程到阻塞队列: "+process.getPID());
-                    return false;
+                    return -1;
                 }else{
                     if(mem.get(i+process.getFrameSize()-1).getStatus()==DMConstant.FREE){
                         boolean isAllFree = true;
@@ -89,7 +90,9 @@ public class FF extends Thread{
                             }
                             process.setStatus(Process.READY);
                             // 分配成功, 打印日志
-                            System.out.println(TimeUtil.getCurrentTime()+"\u001B[33m\u001B[1m[ALLOCATE]\u001B[0m为进程" + process.getPID() + "分配, 大小: "+process.getFrameSize()+ "  起始frame: "+i);
+                            long timeConsume= (new Date().getTime()-process.getArriveTime().getTime())/1000;
+                            process.setTimeConsume(timeConsume) ;// 设置成属性 ,利用返回值会出现-1 的情况, 无法同步统计
+                            System.out.println(TimeUtil.getCurrentTime()+"\u001B[33m\u001B[1m[ALLOCATE]\u001B[0m为进程" + process.getPID() + "分配, 大小: "+process.getFrameSize()+ "  起始frame: "+i + " 耗时 : "+ timeConsume+"(s)");
                             int finalI = i;
                             // 执行进程之后，进行回收
                             threadPool.execute(()->{
@@ -105,7 +108,7 @@ public class FF extends Thread{
                                 }
                                 System.out.println(TimeUtil.getCurrentTime()+"\u001B[35m\u001B[1m[GC]\u001B[0m回收进程 " + process.getPID() + " ,大小: "+process.getFrameSize());
                             });
-                            return true;
+                            return timeConsume;
                         }
                     }
                 }
@@ -114,12 +117,11 @@ public class FF extends Thread{
         process.setStatus(Process.BLOCK);
         blockingQueue.add(process);
         System.out.println(TimeUtil.getCurrentTime()+"\u001B[32m\u001B[1m[FAILED]\u001B[0m添加进程到阻塞队列: "+process.getPID());
-        return false;
+        return -1;
     }
 
     @Override
     public void run() {
-        super.run();
         while(runFlag){
             while(blockingQueue.size()>0){
                 // 先睡眠 , 然后再进行添加, 防止某些时刻帧不足 , 占用极高的进程持续的访问锁, 浪费资源

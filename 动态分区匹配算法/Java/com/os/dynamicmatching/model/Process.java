@@ -59,6 +59,16 @@ public class Process {
      */
     double preemption;
 
+    long timeConsume;
+
+    public long getTimeConsume() {
+        return timeConsume;
+    }
+
+    public void setTimeConsume(long timeConsume) {
+        this.timeConsume = timeConsume;
+    }
+
     public double getPreemption() {
         return preemption;
     }
@@ -73,6 +83,7 @@ public class Process {
         this.frameSize=frameSize;
         order=DEFAULT_ORDER;
         status=READY; // 此处模拟进程分配 , 默认初始进程状态为READY
+        this.arriveTime=new Date();
     }
 
     /**
