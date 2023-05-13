@@ -21,7 +21,7 @@ public class LFUExample {
         for (Element element : elements) {
             System.out.println(element);
         }
-        // 理论上LRU算法的缺页率会随着 物理块数量的增加而降低 , 如果不明显, 可以通过加大第二个参数(访问次数)尝试
+        // 理论上LFU算法的缺页率会随着 物理块数量的增加而降低 , 如果不明显, 可以通过加大第二个参数(访问次数)尝试
         List<String> results = new ArrayList<>();
         results.add(testNBlock(3, 1000));
         results.add(testNBlock(4, 1000));
@@ -50,7 +50,7 @@ public class LFUExample {
         if(n>10){
             throw new RuntimeException("测试块数过多!");
         }
-        // 设置lru序列的容量为n
+        // 设置LFU序列的容量为n
         LFU cache = new LFU(n);
         // 假设我们最开始直接放入3个页面到内存块中，
         for (int i = 1; i <= n; i++) {
