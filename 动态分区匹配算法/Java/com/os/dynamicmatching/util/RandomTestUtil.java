@@ -43,7 +43,7 @@ public class RandomTestUtil {
             Process process = new Process(BASE_PID + i + 1, runTime, frameSize);
             processes.add(process);
         }
-        threadPool = new ThreadPoolExecutor(5, 10, 5, TimeUnit.SECONDS,
+        threadPool = new ThreadPoolExecutor(5, 10, 10, TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>());
     }
 
