@@ -3,9 +3,11 @@
 //
 
 //例子
-//A 3 2
-//B 2 3
-//C 2 4
+/*
+A 3 2
+B 2 3
+C 2 4
+ */
 #include "../algorithms/RR.cpp"
 #include <iostream>
 int main(){

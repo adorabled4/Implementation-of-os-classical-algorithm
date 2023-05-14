@@ -1,6 +1,11 @@
 //
 // Created by 刘晋昂 on 2023/5/8.
 //
+/*
+A 3 2
+B 2 3
+C 2 4
+ */
 #include "../algorithms/SLF.cpp"
 int main()
 {

@@ -15,7 +15,7 @@ using namespace std;
 #define W "waitting"
 // 运行态
 #define R "running"
-// 完成态
+// 完成态w
 #define F "finished"
 //最多100个进程
 const int N = 100;
@@ -31,7 +31,11 @@ struct PCB {
     double RunTime;//进程周转时间
     double avgTime;	//带权周转时
     string State;//进程状态
+    int st; // 开始时间
+    int weight;//进程的优先级（权重）
 };
+
+//声明一个RR类
 class RR{
 public:
     queue<PCB>RRqueue;  //用来模拟进程执行RR调度算法的队列
@@ -41,10 +45,9 @@ public:
     PCB RRarray[N];  //进程结构体
 
 };
-//声明一个RR类
 static RR RRobject;
 
-
+//声明一个SLF类
 class SLF{
 public:
     double SumWT=0,SumWWT=0,AverageWT =0,AverageWWT=0;//平均周转时间、平均带权周转时间
@@ -53,6 +56,23 @@ public:
     PCB  SLFarray[N];  //进程结构体
 
 };
-//声明一个SLF类
 static SLF SLFobject;
+
+//声明一个PS类
+class PS{
+public:
+    PCB PSarray[N];
+    int n;
+    double CurrentTime;//声明当前时间
+    vector<PCB> WaitList;
+};
+static  PS PSobject;
+
+//声明一个SRTF类
+class SRTF{
+public:
+    int n;//进程数
+    vector<PCB> SRTFarray;
+};
+static SRTF SRTFobject;
 #endif //IMPLEMENTATION_OF_OS_CLASSICAL_ALGORITHM_PCB_H
