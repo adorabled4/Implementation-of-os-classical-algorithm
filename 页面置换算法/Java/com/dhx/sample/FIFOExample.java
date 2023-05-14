@@ -11,7 +11,7 @@ import static com.dhx.model.Constant.elements;
 
 /**
  * @author dhx_
- * @className LFUSample
+ * @className FIFOSample
  * @date : 2023-5-5 15:13:42
  **/
 public class FIFOExample {
@@ -21,7 +21,6 @@ public class FIFOExample {
         for (Element element : elements) {
             System.out.println(element);
         }
-        // 理论上LRU算法的缺页率会随着 物理块数量的增加而降低 , 如果不明显, 可以通过加大第二个参数(访问次数)尝试
         List<String> results = new ArrayList<>();
         results.add(testNBlock(3, 1000));
         results.add(testNBlock(4, 1000));
