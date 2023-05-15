@@ -98,13 +98,13 @@ public class RandomTestUtil {
         return new ArrayList<>();
     }
 
-    public static void runAndMemCollect(Process process, int finalI, List<Frame> mem) {
+    public static void runAndMemCollect(Process process, int startFrame, List<Frame> mem) {
         threadPool.execute(() -> {
             process.setStatus(Process.RUNNING);
             try {
                 // 模拟进程执行
                 Thread.sleep(process.getRunTime() * 1000);
-                for (int j = finalI + 1; j < finalI + process.getFrameSize(); j++) {
+                for (int j = startFrame; j < startFrame + process.getFrameSize(); j++) {
                     mem.get(j).setStatus(DMConstant.FREE);
                 }
             } catch (InterruptedException e) {
