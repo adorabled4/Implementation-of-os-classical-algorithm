@@ -2,6 +2,7 @@ package com.os.dynamicmatching.util;
 
 import com.os.dynamicmatching.model.DMConstant;
 import com.os.dynamicmatching.model.Frame;
+import com.os.dynamicmatching.model.FramePartitionNode;
 import com.os.dynamicmatching.model.Process;
 
 import java.lang.reflect.Constructor;
@@ -124,4 +125,35 @@ public class RandomTestUtil {
             }
         });
     }
+
+    public static void runAndMemCollect(Process process, int startFrame, FramePartitionNode node) {
+        List<Frame> mem = node.getMem();
+        node.setStatus(DMConstant.USED);
+        threadPool.execute(() -> {
+            process.setStatus(Process.RUNNING);
+            try {
+                // 模拟进程执行
+                Thread.sleep(process.getRunTime() * 1000);
+                for (int j = startFrame; j < startFrame + process.getFrameSize(); j++) {
+                    mem.get(j).setStatus(DMConstant.FREE);
+                }
+                node.setStatus(DMConstant.FREE);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(TimeUtil.getCurrentTime() + "\u001B[35m\u001B[1m[GC]\u001B[0m回收进程 " + process.getPID() + " ,大小: " + process.getFrameSize());
+            // 设置线程池自动关闭
+            if (threadPool.getActiveCount() == 1) {
+                try {
+                    Thread.sleep(threadPool.getKeepAliveTime(TimeUnit.SECONDS));
+                    if (threadPool.getActiveCount() == 1) {
+                        threadPool.shutdown();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
 }

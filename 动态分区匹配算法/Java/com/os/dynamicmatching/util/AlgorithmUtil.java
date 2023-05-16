@@ -2,6 +2,7 @@ package com.os.dynamicmatching.util;
 
 import com.os.dynamicmatching.model.DMConstant;
 import com.os.dynamicmatching.model.Frame;
+import com.os.dynamicmatching.model.FramePartitionNode;
 import com.os.dynamicmatching.model.Process;
 
 import java.util.*;
@@ -39,7 +40,7 @@ public class AlgorithmUtil {
     }
 
     /**
-     * 分配并标记内存
+     * 分配标记内存 并 执行
      * @param startFrame
      * @param mem
      * @param process
@@ -56,5 +57,26 @@ public class AlgorithmUtil {
         System.out.println(TimeUtil.getCurrentTime() + "\u001B[33m\u001B[1m[ALLOCATE]\u001B[0m为进程" + process.getPID() + "分配, 大小: " + process.getFrameSize() + "  起始frame: " + startFrame + " 本次分配耗时 : " + process.getTimeConsume() + "(ns)");
         // 执行进程
         RandomTestUtil.runAndMemCollect(process, startFrame, mem);
+    }
+
+    /**
+     * 分配标记内存 并 执行
+     * @param startFrame
+     * @param node
+     * @param process
+     * @param startTime
+     */
+    public static void allocateMem(int startFrame, FramePartitionNode node, Process process, long startTime) {
+        List<Frame> mem = node.getMem();
+        // 标记内存为已使用
+        for (int j = startFrame; j < startFrame + process.getFrameSize(); j++) {
+            mem.get(j).setStatus(DMConstant.USED);
+        }
+        process.setStatus(Process.READY);
+        long timeConsume = (System.nanoTime() - startTime) / 1000;
+        process.setTimeConsume(timeConsume);
+        System.out.println(TimeUtil.getCurrentTime() + "\u001B[33m\u001B[1m[ALLOCATE]\u001B[0m为进程" + process.getPID() + "分配, 大小: " + process.getFrameSize() + "  起始frame: " + startFrame + " 本次分配耗时 : " + process.getTimeConsume() + "(ns)");
+        // 执行进程
+        RandomTestUtil.runAndMemCollect(process, startFrame, node);
     }
 }
