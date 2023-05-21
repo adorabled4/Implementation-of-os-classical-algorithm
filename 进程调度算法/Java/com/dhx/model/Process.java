@@ -150,4 +150,13 @@ public class Process {
     public void setAveCycleTime(long aveCycleTime) {
         this.aveCycleTime = aveCycleTime;
     }
+
+    @Override
+    public String toString() {
+        return "Process{" +
+                "PID=" + PID +
+                ", status=" + status +
+                ", order=" + order +
+                '}';
+    }
 }

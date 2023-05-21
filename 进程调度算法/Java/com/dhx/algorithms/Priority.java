@@ -47,8 +47,8 @@ public class Priority {
      * @param p 进程
      */
     public void addProcess(Process p){
-        System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss.sss").format(new Date())+
-                "\33[35;1m[arrive]进程到达\33[0m, 进程ID :"+ p.getPID() +" 预计用时: "+p.getRunTime() +"(s)");
+        System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date())+
+                "\33[35;1m[ARRIVE]进程到达\33[0m, 进程ID :"+ p.getPID() +" 预计用时: "+p.getRunTime() +"(s)");
         p.setStatus(Process.READY);
         p.setArriveTime(new Date()); // 设置到达时间
         // 如果当前的就绪队列已满, 那么把程序添加到阻塞队列(实际上的作用相当于挂载:suspend)
@@ -72,13 +72,13 @@ public class Priority {
             // 从就绪队列中获取进程
             running=readyQueue.poll();
             try{
-                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss.sss").format(new Date())+
-                        "\33[92;1m[running]执行进程\33[0m  进程ID :"+ running.getPID()+
+                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date())+
+                        "\33[92;1m[RUNNING]执行进程\33[0m  进程ID :"+ running.getPID()+
                         "\t耗时: "+running.getRunTime()+"(s)"+
                                 " , 进程优先级为: "+running.getOrder());
                 Thread.sleep(running.getRunTime()*1000);
             }catch (InterruptedException e) {
-                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss.sss") + "执行进程出现异常");
+                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss") + "执行进程出现异常");
             }
             running=null;
         }
