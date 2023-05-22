@@ -43,18 +43,19 @@ public class FCFS {
 
     /**
      * 添加进程
+     *
      * @param p 进程
      */
-    public void addProcess(Process p){
-        System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date())+
-                "\33[35;1m[ARRIVE]进程到达\33[0m, 进程ID :"+ p.getPID() +" 预计用时: "+p.getRunTime() +"(s)");
+    public void addProcess(Process p) {
+        System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date()) +
+                "\33[35;1m[ARRIVE]进程到达\33[0m, 进程ID :" + p.getPID() + " 预计用时: " + p.getRunTime() + "(s)");
         p.setStatus(Process.READY);
         p.setArriveTime(new Date()); // 设置到达时间
         // 如果当前的就绪队列已满, 那么把程序添加到阻塞队列(实际上的作用相当于挂载:suspend)
-        if(readyQueue.size()>=cap){
+        if (readyQueue.size() >= cap) {
             p.setStatus(Process.BLOCK);
             blockQueue.add(p);
-            return ;
+            return;
         }
         readyQueue.add(p);
         totalProcessNum++;
@@ -63,21 +64,21 @@ public class FCFS {
     /**
      * 执行进程
      */
-    public void executeProcess(){
-        while(running==null && (readyQueue.size()>0 || blockQueue.size()>0)){
-            if(readyQueue.size()<1){
+    public void executeProcess() {
+        while (running == null && (readyQueue.size() > 0 || blockQueue.size() > 0)) {
+            if (readyQueue.size() < 1) {
                 fromBlock2Ready();
             }
-            running=readyQueue.poll();
-            try{
-                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date())+
-                        "\33[92;1m[RUNNING]执行进程\33[0m  进程ID :"+ running.getPID()+
-                        "\t耗时: "+running.getRunTime()+"(s)");
-                Thread.sleep(running.getRunTime()*1000);
-            }catch (InterruptedException e) {
+            running = readyQueue.poll();
+            try {
+                Thread.sleep(running.getRunTime() * 1000);
+                System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date()) +
+                        "\33[92;1m[FINISH]执行完毕\33[0m  进程ID :" + running.getPID() +
+                        "\t耗时: " + running.getRunTime() + "(s)");
+            } catch (InterruptedException e) {
                 System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss") + "执行进程出现异常");
             }
-            running=null;
+            running = null;
         }
         completedNum++;
     }
@@ -85,13 +86,13 @@ public class FCFS {
     /**
      * 把程序从阻塞队列移动到等待队列
      */
-    private void fromBlock2Ready(){
-        if(blockQueue.size() == 0){
-            return ;
+    private void fromBlock2Ready() {
+        if (blockQueue.size() == 0) {
+            return;
         }
-        while(blockQueue.size()>0 && readyQueue.size()<cap){
-            Process process= readyQueue.poll();
-            if(process!=null){
+        while (blockQueue.size() > 0 && readyQueue.size() < cap) {
+            Process process = readyQueue.poll();
+            if (process != null) {
                 process.setStatus(Process.READY);
                 readyQueue.add(process);
             }
@@ -101,23 +102,23 @@ public class FCFS {
     /**
      * 开始执行
      */
-    public void start(){
-        while(true){
+    public void start() {
+        while (true) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if(readyQueue.size()>0 || blockQueue.size()>0){
+            if (readyQueue.size() > 0 || blockQueue.size() > 0) {
                 executeProcess();
             }
         }
     }
 
-    public FCFS(int capacity){
-        this.cap =capacity;
-        readyQueue=new LinkedList<>();
-        blockQueue=new LinkedList<>();
+    public FCFS(int capacity) {
+        this.cap = capacity;
+        readyQueue = new LinkedList<>();
+        blockQueue = new LinkedList<>();
     }
 
 }

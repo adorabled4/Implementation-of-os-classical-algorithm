@@ -32,10 +32,6 @@ public class MLFQ {
      */
     private List<LinkedList<Process>> multiQueue;
 
-    /**
-     * 执行标志
-     */
-    private boolean runFlag=true;
 
     /**
      * 每个队列的时间片大小
@@ -72,7 +68,6 @@ public class MLFQ {
         while (true) {
             int queueIndex = getNextQueueLevel();
             if(queueIndex==-1){
-                runFlag=false;
                 break;// 所有级的队列都为空 , 结束执行
             }
             LinkedList<Process> currentQueue= multiQueue.get(queueIndex);
@@ -83,7 +78,7 @@ public class MLFQ {
                 long runTime = running.getRunTime();
                 try {
                     if (runTime > quantum[queueIndex]) {
-                        Thread.sleep(running.getRunTime() * 1000);
+                        Thread.sleep(quantum[queueIndex] * 1000);
                         runTime=runTime - quantum[queueIndex];
                         running.setRunTime(runTime);
                         // 将进程加入下一级队列
@@ -96,7 +91,7 @@ public class MLFQ {
                         }
                         multiQueue.get(queueIndex + 1).offer(running);
                         System.out.println(new SimpleDateFormat("MM-dd hh:mm:ss").format(new Date()) +
-                                "\u001B[32m\u001B[1m[LACK]\u001B[0m, 进程ID :" + running.getPID() +
+                                "\u001B[32m\u001B[1m[LACK]\u001B[0m时间片耗尽, 进程ID :" + running.getPID() +
                                 "\t耗时: " + quantum[queueIndex] + "(s)" +
                                 "添加进程到第 " + (queueIndex + 2) + " 级队列");
                     } else {
@@ -133,7 +128,7 @@ public class MLFQ {
      * 开始执行
      */
     public void start() {
-        while (runFlag) {
+        while (true) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

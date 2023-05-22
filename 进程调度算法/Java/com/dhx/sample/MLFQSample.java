@@ -16,17 +16,14 @@ public class MLFQSample {
     public static MLFQ mlfq;
 
     public static void main(String[] args) throws InterruptedException {
-        int[]quantum = new int[]{1, 2, 3, 4, 5};
+        int[]quantum = new int[]{2, 2, 2, 4, 5};
         int queueSize = 5;
         mlfq = new MLFQ(queueSize,quantum);
         Thread addThread = new Thread(() -> {
-            addProcess2Queue(6, 5, 3);
-        });
-        Thread runThread = new Thread(() -> {
-            mlfq.start();
+            addProcess2Queue(6, 10, 3);
         });
         addThread.start();
-        runThread.start();
+        mlfq.start();
     }
 
     /**
