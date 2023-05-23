@@ -1,5 +1,4 @@
 import random
-#123
 import copy
 TRACK_MAX_COUNT = 100  # 磁道的总数
 TRACK_REQUEST_COUNT = 10  # 请求访问的磁道数量

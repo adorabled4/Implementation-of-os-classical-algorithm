@@ -1,5 +1,4 @@
 from FCFS import *
-#123
 def CSCAN(track_request):
     global SCAN_DIRECTION
     queue_CSCAN = []

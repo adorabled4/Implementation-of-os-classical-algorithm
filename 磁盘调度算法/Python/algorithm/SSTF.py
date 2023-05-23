@@ -1,5 +1,4 @@
 from FCFS import *
-#123
 def findNearest(current, track_request, visited):
     minDis = TRACK_MAX_COUNT
     minIndex = -1
