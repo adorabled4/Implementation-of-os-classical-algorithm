@@ -17,7 +17,7 @@ bool cmp_by_value1(const pair<int, int>& lhs, const pair<int, int>& rhs) {
 	return lhs.second < rhs.second;		//改变排序规则，以第二个的值为从小到大排
 }
 bool cmp_by_value2(const pair<int, int>& lhs, const pair<int, int>& rhs) {
-	return lhs.first < rhs.first;		//改变排序规则，以第二个的值为从小到大排
+	return lhs.first < rhs.first;		//改变排序规则，以第一个的值为从小到大排
 }
 class BF
 {
