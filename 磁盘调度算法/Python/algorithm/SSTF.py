@@ -11,7 +11,7 @@ def findNearest(current, track_request, visited):
     visited[minIndex] = True
     return minIndex, minDis
 
-
+#SSTF
 def SSTF(track_request):
     visited = [False] * TRACK_REQUEST_COUNT
     queue_FCFS = []
