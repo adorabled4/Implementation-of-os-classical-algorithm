@@ -1,4 +1,4 @@
-#123
+
 from python.algorithms.FirstFit import *
 # 循环首次适应算法
 def alloc1(taskID, Tasklength, list):

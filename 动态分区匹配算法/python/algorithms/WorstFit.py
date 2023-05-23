@@ -1,4 +1,4 @@
-#123
+
 from algorithms.FirstFit import *
 ##最坏适应算法
 def bubble_sort2(list):
