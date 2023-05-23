@@ -7,7 +7,7 @@ def CSCAN(track_request):
     track_request_copy.sort()
     i = 0
     is_find = False
-
+#
     if SCAN_DIRECTION == 1:
         while i < track_request_copy.__len__():
             if (TRACK_START <= track_request_copy[i]) & (is_find == False):
