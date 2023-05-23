@@ -5,14 +5,6 @@ package algorithms;
  * @className SSTF
  * @date : 2023/05/13/ 17:35
  **/
-
-/**
- * SSTF算法选择调度处理的磁道是与当前磁头所在磁道距离最近的磁道，
- * 以使每次的寻找时间最短。当然，总是选择最小寻找时间并不能保证平均寻找时间最小，
- * 但是能提供比FCFS算法更好的性能。这种算法会产生“饥饿”现象。
- */
-import java.util.Scanner;
-
 public class SSTF {
     private int n; // 磁盘请求数目
     private int[] request; // 磁盘请求序列
@@ -29,7 +21,7 @@ public class SSTF {
         }
     }
 
-    public void schedule() {
+    public int schedule() {
         int distance = 0; // 磁头移动距离
         int seekTime = 0; // 磁头寻道总距离
         System.out.println("SSTF算法调度过程如下：");
@@ -53,5 +45,6 @@ public class SSTF {
         System.out.println("SSTF算法调度结束");
         System.out.println("总移动距离为：" + seekTime);
         System.out.println("平均寻道长度为：" + (double)seekTime / n);
+        return seekTime;
     }
 }

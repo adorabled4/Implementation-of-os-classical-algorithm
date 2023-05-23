@@ -4,6 +4,7 @@ import algorithms.CSCAN;
 import algorithms.FCFS;
 import algorithms.SCAN;
 import algorithms.SSTF;
+import util.TestUtil;
 
 import java.util.Scanner;
 
@@ -14,30 +15,35 @@ import java.util.Scanner;
  **/
 public class Example {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入磁盘请求数目：");
-        int n = sc.nextInt(); // 磁盘请求数目
-        int[] request = new int[n]; // 磁盘请求序列
-        System.out.println("请输入磁盘请求序列：");
-        for (int i = 0; i < n; i++) {
-            request[i] = sc.nextInt(); // 输入磁盘请求序列
-        }
-        System.out.println("请输入磁头初始位置：");
-        int head = sc.nextInt(); // 磁头初始位置
+        compareTest();
+    }
 
+    /**
+     * 通用测试: 单独测试某个算法的表现情况
+     */
+    static void commonTest() {
+        int size = 20; // 磁盘序列的大小
+        int head = 0; // 磁头的初始位置;
+        int min = 10; // 磁道的最小值
+        int max = 200;// 磁道的最大值
+        // 通过通用测试类进行测试
+        // 修改第一个方法来选定需要测试的算法
+        TestUtil.algorithmTest(FCFS.class, size, min, max, head);
+        TestUtil.algorithmTest(CSCAN.class, size, min, max, head);
+        TestUtil.algorithmTest(SCAN.class, size, min, max, head);
+        TestUtil.algorithmTest(SSTF.class, size, min, max, head);
+    }
 
-        //根据需要放开其中两行
-//        CSCAN cScan = new CSCAN(n, request, head); // 创建C_SCAN对象
-//        cScan.schedule(); // 调用schedule方法进行调度
-//
-//        SCAN Scan = new SCAN(n, request, head); // 创建SCAN对象
-//        Scan.schedule(); // 调用schedule方法进行调度
-//
-//        SSTF sstf = new SSTF(n, request, head); // 创建SSTF对象
-//        sstf.schedule(); // 调用schedule方法进行调度
-
-        FCFS fcfs = new FCFS(n, request, head); // 创建FCFS对象
-        fcfs.schedule(); // 调用schedule方法进行调度
-
+    /**
+     * 对比测试: 测试相同数据下各个算法的表现情况
+     */
+    static void compareTest() {
+        int size = 20; // 磁盘序列的大小
+        int head = 0; // 磁头的初始位置;
+        int min = 10; // 磁道的最小值
+        int max = 200;// 磁道的最大值
+        // 对比测试
+        Class<?>[] classes = new Class[]{FCFS.class,CSCAN.class,SCAN.class,SSTF.class};
+        TestUtil.algorithmTest(classes, size, min, max, head);
     }
 }
