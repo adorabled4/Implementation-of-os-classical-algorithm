@@ -59,6 +59,15 @@ public:
 			cout << "空间超出范围" << endl;
 			return;
 		}
+		for (auto i : p)					//判断是否在可释放空间
+		{
+			if (i.first <= n && i.second + n >= n)
+			{
+				cout << "释放空间有误" << endl;
+				return;
+			}
+
+		}
 		p.push_back(pair<int, int>(n, length));//将新空闲位置加入
 		sort(p.begin(), p.end(), cmp_by_value2);//按key值排序，便于合并相邻空闲空间
 		for (int j = 0, k = 1; k < p.size(); k++)
