@@ -1,11 +1,11 @@
 ﻿//
-//最佳适应算法（Best - Fit）：
+//最坏适应算法（Worst-Fit）
 //  Created by dhrzbz on 2023/5/23.
 // 
 
-//最佳适应算法（Best - Fit）：
-//该算法会按照⼤⼩顺序查找最⼩的能够满⾜需求的空闲分
-//区，并将进程放⼊其中。
+//最坏适应算法（Worst-Fit）
+//该算法会按照⼤⼩顺序查找最⼤的空闲分区，并将进程
+//放⼊其中。
 
 #include<iostream>
 #include<vector>
