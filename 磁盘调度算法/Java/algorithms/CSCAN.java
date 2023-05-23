@@ -8,10 +8,6 @@ import java.util.Arrays;
  * @className CSCAN
  * @date : 2023/05/13/ 17:36
  **/
-
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class CSCAN {
     private int n; // 磁盘请求数目
     private int[] request; // 磁盘请求序列
@@ -24,7 +20,7 @@ public class CSCAN {
         Arrays.sort(request); // 对请求序列进行升序排序
     }
 
-    public void schedule() {
+    public int schedule() {
         int distance = 0; // 磁头移动距离
         int seekTime = 0; // 磁头寻道时间
         System.out.println("C-SCAN算法调度过程如下：");
@@ -50,6 +46,7 @@ public class CSCAN {
         System.out.println("CSCAN算法调度结束");
         System.out.println("总移动距离为：" + seekTime);
         System.out.println("平均寻道长度为：" + (double)seekTime / n);
+        return seekTime;
     }
 }
 
